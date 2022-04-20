@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 
-const { JWT_SECRET } = require('./');
+const secret = process.env.JWT_SECRET || "edasf9TOPSECRETrp^&^*&@hfransKKdfs2842{}:<dsa,m";
 
-const toToken = data => jwt.sign(data, JWT_SECRET, { expiresIn: "12h" });
+const toToken = data => jwt.sign(data, secret, { expiresIn: "12h" });
 
-const toData = token => jwt.verify(token, JWT_SECRET);
+const toData = token => jwt.verify(token, secret);
 
 module.exports = { toToken, toData };
