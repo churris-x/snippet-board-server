@@ -17,7 +17,7 @@ router.post('/signup', async (request, response) => {
 
 	const alreadyUser = await user.findOne({ where: { email } });
 	if (alreadyUser) {
-		return response.status(400).send('Email is already in use!');
+		return response.status(400).send('Email is invalid or already taken!');
 	}
 
 	console.log(SALT_ROUNDS, typeof SALT_ROUNDS)
@@ -25,8 +25,7 @@ router.post('/signup', async (request, response) => {
 		const newUser = await user.create({
 			name,
 			email,
-			password
-			// password: bcrypt.hashSync(password, SALT_ROUNDS),
+			password: bcrypt.hashSync(password, SALT_ROUNDS),
 		});
 		response.send('Successfully created user');
 	} catch (error) {
