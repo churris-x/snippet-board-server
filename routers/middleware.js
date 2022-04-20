@@ -5,7 +5,7 @@ const auth = async (request, response, next) => {
 	const token = request.headers.authorization;
 
 	if (!token || !token.includes('Bearer ')) {
-		return response.status(400).send({ message: "Invalid request" });
+		return response.status(400).send("Invalid request");
 	}
 
 	try {
@@ -23,7 +23,7 @@ const auth = async (request, response, next) => {
 			throw 'not in database'
 		}
 	} catch (error) {
-		response.status(401).send({ message: "Invalid token" });
+		response.status(401).send("Invalid token");
 	}
 };
 
