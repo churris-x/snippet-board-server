@@ -26,4 +26,27 @@ router.get('/', async (request, response) => {
 	}
 });
 
+router.get('/user', auth, async (request, response) => {
+	const { id } = request.user;
+
+	try {
+		const userPosts = await post.findAll({
+			where: { userId: id },
+			// attributes: {
+			// 	include: [
+			// 		[sequelize.fn("COUNT", sequelize.col("bids")), "bidCount"]
+			// 	]
+			// },
+			// include: {
+			// 	model: bid,
+			// 	attributes: []
+			// },
+			// group: ['post.id'],
+		});
+	} catch (error) {
+		response.status(500).send(`Something went wrong: ${error.message}`);
+	}
+
+});
+
 module.exports = router;

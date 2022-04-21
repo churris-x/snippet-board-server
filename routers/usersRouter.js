@@ -20,7 +20,6 @@ router.post('/signup', async (request, response) => {
 		return response.status(400).send('Email is invalid or already taken!');
 	}
 
-	console.log(SALT_ROUNDS, typeof SALT_ROUNDS)
 	try {
 		const newUser = await user.create({
 			name,
