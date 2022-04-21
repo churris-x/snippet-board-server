@@ -1,4 +1,5 @@
 const { user } = require("../models");
+const { toData } = require('../constants');
 
 const auth = async (request, response, next) => {
 
@@ -11,14 +12,12 @@ const auth = async (request, response, next) => {
 	try {
 		const { userId } = toData(token.split(' ')[1]);
 
-		// add userId to request object
-		request.user = { id: userId };
+		const isUser = await user.findByPk(userId, { attributes: { exclude: 'password' } });
 
-		// checks if user exists in database -> check if user is deleted
-		const isUser = await user.findByPk(userId);
-
-		if (isUser) {	// comment this out?
+		if (isUser) {
+			request.user = isUser;
 			next();
+
 		} else {
 			throw 'not in database'
 		}

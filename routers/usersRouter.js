@@ -54,4 +54,8 @@ router.post('/login', async (request, response) => {
 	}
 });
 
+router.get('/me', auth, async (request, response) => {
+	response.send(request.user);
+});
+
 module.exports = router;
