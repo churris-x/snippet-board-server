@@ -47,7 +47,10 @@ router.post('/login', async (request, response) => {
 	if (bcrypt.compareSync(password, alreadyUser.password)) {
 
 		const token = toToken({ userId: alreadyUser.id });
-		response.send({ token });
+
+		delete alreadyUser.dataValues["password"];
+
+		response.send({ token, ...alreadyUser.dataValues });
 	} else {
 		response.status(400).send('Incorrect email or password');
 	}
