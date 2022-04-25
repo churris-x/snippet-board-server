@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 		syntax: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			defaultValue: 'text'
+			defaultValue: 'plain_text'
 		},
 	}, {
 		sequelize,

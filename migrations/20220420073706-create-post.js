@@ -19,7 +19,7 @@ module.exports = {
 			syntax: {
 				type: Sequelize.STRING,
 				allowNull: false,
-				defaultValue: 'text'
+				defaultValue: 'plain_text'
 			},
 			createdAt: {
 				allowNull: false,
