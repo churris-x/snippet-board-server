@@ -32,6 +32,7 @@ router.get('/user', auth, async (request, response) => {
 	try {
 		const userPosts = await post.findAll({
 			where: { userId: id },
+			order: [['updatedAt', 'DESC']]
 		});
 		response.send(userPosts);
 	} catch (error) {
