@@ -36,17 +36,13 @@ router.get('/user', auth, async (request, response) => {
 		});
 		response.send(userPosts);
 	} catch (error) {
-		response.status(500).send(`Something went wrong: ${error.message}`);
+		response.status(500).send(`Sequelize: ${error.message}`);
 	}
 });
 
 router.post('/user', auth, async (request, response) => {
 	const { id } = request.user;
-	const {
-		title,
-		body,
-		syntax
-	} = request.body;
+	const { title, body, syntax } = request.body;
 
 	if (!title || !body) return response.status(400).send('Missing title or body');
 
@@ -59,7 +55,50 @@ router.post('/user', auth, async (request, response) => {
 		});
 		response.send(newPost);
 	} catch (error) {
-		response.status(500).send(`Something went wrong: ${error.message}`);
+		response.status(500).send(`Sequelize: ${error.message}`);
+	}
+});
+
+router.patch('/user/:postId', auth, async (request, response) => {
+	const { id } = request.user;
+	const { postId } = request.params;
+	const { title, body, syntax } = request.body;
+
+	if (!title || !body) return response.status(400).send('Missing title or body');
+
+	try {
+		const onePost = await post.findOne({ where: { id: postId, userId: id } });
+		if (!onePost) return response.status(400).send('Post does not exist');
+
+		const newPost = await post.update({
+			title,
+			body,
+			syntax: syntax || 'plain_text',
+		}, {
+			where: { id: postId, userId: id }
+		});
+
+		const updatedPost = await post.findOne({ where: { id: postId, userId: id } });
+
+		response.send(updatedPost);
+	} catch (error) {
+		response.status(500).send(`Sequelize: ${error.message}`);
+	}
+});
+
+router.delete('/user/:postId', auth, async (request, response) => {
+	const { id } = request.user;
+	const { postId } = request.params;
+
+	try {
+		const onePost = await post.findOne({ where: { id: postId, userId: id } });
+		if (!onePost) return response.status(400).send('Post does not exist');
+
+		const deletedPost = await post.destroy({ where: { id: postId, userId: id } });
+
+		response.send('Deleted post');
+	} catch (error) {
+		response.status(500).send(`Sequelize: ${error.message}`);
 	}
 });
 
