@@ -54,7 +54,7 @@ router.post('/user', auth, async (request, response) => {
 		const newPost = await post.create({
 			title,
 			body,
-			syntax,
+			syntax: syntax || 'plain_text',
 			userId: id,
 		});
 		response.send(newPost);
