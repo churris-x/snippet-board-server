@@ -59,6 +59,22 @@ router.post('/user', auth, async (request, response) => {
 	}
 });
 
+router.get('/user/:postId', auth, async (request, response) => {
+	const { id } = request.user;
+	const { postId } = request.params;
+
+	try {
+		const onePost = await post.findOne({
+			where: { id: postId, userId: id }
+		});
+		if (!onePost) return response.status(400).send('Post does not exist');
+
+		response.send(onePost);
+	} catch (error) {
+		response.status(500).send(`Sequelize: ${error.message}`);
+	}
+});
+
 router.patch('/user/:postId', auth, async (request, response) => {
 	const { id } = request.user;
 	const { postId } = request.params;
