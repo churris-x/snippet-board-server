@@ -42,7 +42,7 @@ router.get('/user', auth, async (request, response) => {
 
 router.post('/user', auth, async (request, response) => {
 	const { id } = request.user;
-	const { title, body, syntax } = request.body;
+	const { title, body, description, syntax } = request.body;
 
 	if (!title || !body) return response.status(400).send('Missing title or body');
 
@@ -50,6 +50,7 @@ router.post('/user', auth, async (request, response) => {
 		const newPost = await post.create({
 			title,
 			body,
+			description,
 			syntax: syntax || 'plain_text',
 			userId: id,
 		});
@@ -78,7 +79,7 @@ router.get('/user/:postId', auth, async (request, response) => {
 router.patch('/user/:postId', auth, async (request, response) => {
 	const { id } = request.user;
 	const { postId } = request.params;
-	const { title, body, syntax } = request.body;
+	const { title, body, description, syntax } = request.body;
 
 	if (!title || !body) return response.status(400).send('Missing title or body');
 
@@ -89,6 +90,7 @@ router.patch('/user/:postId', auth, async (request, response) => {
 		const newPost = await post.update({
 			title,
 			body,
+			description,
 			syntax: syntax || 'plain_text',
 		}, {
 			where: { id: postId, userId: id }
