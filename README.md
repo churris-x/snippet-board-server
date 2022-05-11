@@ -1,6 +1,8 @@
 # Snippet Board Backend
 
-Express JS backend server for my Snippet Board website.
+Express JS backend server for my Snippet Board website. 
+
+Handles user account (login, signup) and snippet CRUD.
 
 ## Data structure
 
@@ -34,4 +36,5 @@ Snippets
 ## Technologies
  - Express JS
  - Sequelize
+ - JWT Authentication with bcrypt
  - Developed with [ElephantSQL](https://www.elephantsql.com/), deployed with [Heroku](https://www.heroku.com/)
