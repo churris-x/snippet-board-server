@@ -2,14 +2,26 @@
 
 Express JS backend server for my Snippet Board website.
 
+## Data structure
+
+Snippets
+
+| Key         | Type    | Nullable | Notes                       |
+|-------------|---------|----------|-----------------------------|
+| id          | integer | false    | pk, auto increment          |
+| title       | string  | false    |                             |
+| description | text    | true     | Long text, varchar          |
+| body        | text    | false    | Long text, varchar          |
+| syntax      | string  | false    | default value: 'plain_text' |
+
 ## Routes
 /
 - `GET		:4055/`							response: 'Hello world!'
 
 /user
-- `POST		:4055/user/signup`				body: { name, email, password }
-- `POST		:4055/user/login`				body: { name, password } response: { token }
-- `GET		:4055/user/me`					header: { Authorization:'Bearer token' } response: { id, name, email }
+- `POST		:4055/users/signup`				body: { name, email, password }
+- `POST		:4055/users/login`				body: { name, password } response: { token }
+- `GET		:4055/users/me`					header: { Authorization:'Bearer token' } response: { id, name, email }
 
 /snippets
 <!-- - `GET		:4055/snippets` 			response: {[ snippets ]} -->
