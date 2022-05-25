@@ -11,16 +11,12 @@ const auth = async (request, response, next) => {
 
 	try {
 		const { userId } = toData(token.split(' ')[1]);
-
 		const isUser = await user.findByPk(userId, { attributes: { exclude: 'password' } });
 
 		if (isUser) {
 			request.user = isUser;
 			next();
-
-		} else {
-			throw 'not in database'
-		}
+		} else throw 'not in database'
 	} catch (error) {
 		response.status(401).send("Invalid token");
 	}
