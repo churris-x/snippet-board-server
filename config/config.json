@@ -1,6 +1,6 @@
 {
 	"development": {
-		"url": "postgres://dwrgradl:xa2CqmiDEQEsUWhf-QfG5vtTetKWHU6h@hattie.db.elephantsql.com/dwrgradl",
+		"use_env_variable": "DATABASE_URL",
 		"dialect": "postgres"
 	},
 	"test": {
