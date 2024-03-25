@@ -1,7 +1,7 @@
-const { Router } = require("express");
+const { Router } = require('express');
 
-const { auth } = require("./middleware");
-const { user, post, sequelize } = require("../models");
+const { auth } = require('./middleware');
+const { user, post, sequelize } = require('../models');
 
 // PATH	/posts
 const router = new Router();
@@ -27,97 +27,110 @@ const router = new Router();
 // });
 
 router.get('/user', auth, async (request, response) => {
-	const { id } = request.user;
+    const { id } = request.user;
 
-	try {
-		const userPosts = await post.findAll({
-			where: { userId: id },
-			order: [['updatedAt', 'DESC']]
-		});
-		response.send(userPosts);
-	} catch (error) {
-		response.status(500).send(`Sequelize: ${error.message}`);
-	}
+    try {
+        const userPosts = await post.findAll({
+            where: { userId: id },
+            order: [['updatedAt', 'DESC']],
+        });
+        response.send(userPosts);
+    } catch (error) {
+        response.status(500).send(`Sequelize: ${error.message}`);
+    }
 });
 
 router.post('/user', auth, async (request, response) => {
-	const { id } = request.user;
-	const { title, body, description, syntax } = request.body;
+    const { id } = request.user;
+    const { title, body, description, syntax } = request.body;
 
-	if (!title || !body) return response.status(400).send('Missing title or body');
+    if (!title || !body)
+        return response.status(400).send('Missing title or body');
 
-	try {
-		const newPost = await post.create({
-			title,
-			body,
-			description,
-			syntax: syntax || 'plain_text',
-			userId: id,
-		});
-		response.send(newPost);
-	} catch (error) {
-		response.status(500).send(`Sequelize: ${error.message}`);
-	}
+    try {
+        const newPost = await post.create({
+            title,
+            body,
+            description,
+            syntax: syntax || 'plain_text',
+            userId: id,
+        });
+        response.send(newPost);
+    } catch (error) {
+        response.status(500).send(`Sequelize: ${error.message}`);
+    }
 });
 
 router.get('/user/:postId', auth, async (request, response) => {
-	const { id } = request.user;
-	const { postId } = request.params;
+    const { id } = request.user;
+    const { postId } = request.params;
 
-	try {
-		const onePost = await post.findOne({
-			where: { id: postId, userId: id }
-		});
-		if (!onePost) return response.status(400).send('Post does not exist');
+    try {
+        const onePost = await post.findOne({
+            where: { id: postId, userId: id },
+        });
+        if (!onePost) return response.status(400).send('Post does not exist');
 
-		response.send(onePost);
-	} catch (error) {
-		response.status(500).send(`Sequelize: ${error.message}`);
-	}
+        response.send(onePost);
+    } catch (error) {
+        response.status(500).send(`Sequelize: ${error.message}`);
+    }
 });
 
 router.patch('/user/:postId', auth, async (request, response) => {
-	const { id } = request.user;
-	const { postId } = request.params;
-	const { title, body, description, syntax } = request.body;
+    const { id } = request.user;
+    const { postId } = request.params;
+    const { title, body, description, syntax } = request.body;
 
-	if (!title || !body) return response.status(400).send('Missing title or body');
+    if (!title || !body)
+        return response.status(400).send('Missing title or body');
 
-	try {
-		const onePost = await post.findOne({ where: { id: postId, userId: id } });
-		if (!onePost) return response.status(400).send('Post does not exist');
+    try {
+        const onePost = await post.findOne({
+            where: { id: postId, userId: id },
+        });
+        if (!onePost) return response.status(400).send('Post does not exist');
 
-		const newPost = await post.update({
-			title,
-			body,
-			description,
-			syntax: syntax || 'plain_text',
-		}, {
-			where: { id: postId, userId: id }
-		});
+        const newPost = await post.update(
+            {
+                title,
+                body,
+                description,
+                syntax: syntax || 'plain_text',
+            },
+            {
+                where: { id: postId, userId: id },
+            },
+        );
 
-		const updatedPost = await post.findOne({ where: { id: postId, userId: id } });
+        const updatedPost = await post.findOne({
+            where: { id: postId, userId: id },
+        });
 
-		response.send(updatedPost);
-	} catch (error) {
-		response.status(500).send(`Sequelize: ${error.message}`);
-	}
+        response.send(updatedPost);
+    } catch (error) {
+        response.status(500).send(`Sequelize: ${error.message}`);
+    }
 });
 
 router.delete('/user/:postId', auth, async (request, response) => {
-	const { id } = request.user;
-	const { postId } = request.params;
+    const { id } = request.user;
+    const { postId } = request.params;
 
-	try {
-		const onePost = await post.findOne({ where: { id: postId, userId: id } });
-		if (!onePost) return response.status(400).send('Post does not exist');
+    try {
+        const onePost = await post.findOne({
+            where: { id: postId, userId: id },
+        });
+        if (!onePost) return response.status(400).send('Post does not exist');
 
-		const deletedPost = await post.destroy({ where: { id: postId, userId: id } });
+        const deletedPost = await post.destroy({
+            where: { id: postId, userId: id },
+        });
 
-		response.send('Deleted post');
-	} catch (error) {
-		response.status(500).send(`Sequelize: ${error.message}`);
-	}
+        response.send('Deleted post');
+    } catch (error) {
+        response.status(500).send(`Sequelize: ${error.message}`);
+    }
 });
 
 module.exports = router;

@@ -1,7 +1,7 @@
-require('dotenv').config()
+require('dotenv').config();
 
-const express = require("express");
-const jsonParser = express.json()
+const express = require('express');
+const jsonParser = express.json();
 const cors = require('cors');
 
 const { PORT } = require('./constants');

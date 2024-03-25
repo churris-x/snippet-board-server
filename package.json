@@ -1,23 +1,23 @@
 {
-	"name": "snippet-board-server",
-	"version": "2.1.0",
-	"description": "Expressjs server",
-	"main": "server.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node server.js",
-		"dev": "npx nodemon server.js"
-	},
-	"author": "Fran",
-	"license": "MIT",
-	"dependencies": {
-		"bcrypt": "^5.0.1",
-		"cors": "^2.8.5",
-		"dotenv": "^16.0.1",
-		"express": "^4.17.3",
-		"jsonwebtoken": "^8.5.1",
-		"pg": "^8.7.3",
-		"sequelize": "^6.19.0",
-		"sequelize-cli": "^6.4.1"
-	}
+    "name": "snippet-board-server",
+    "version": "2.1.0",
+    "description": "Expressjs server",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "dev": "npx nodemon server.js"
+    },
+    "author": "Fran",
+    "license": "MIT",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
+        "express": "^4.17.3",
+        "jsonwebtoken": "^8.5.1",
+        "pg": "^8.7.3",
+        "sequelize": "^6.19.0",
+        "sequelize-cli": "^6.4.1"
+    }
 }
