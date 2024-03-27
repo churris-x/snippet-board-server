@@ -37,4 +37,4 @@ Snippets
  - Express JS
  - Sequelize
  - JWT Authentication with bcrypt
- - Developed with [ElephantSQL](https://www.elephantsql.com/), deployed with [Heroku](https://www.heroku.com/)
+ - Developed with [ElephantSQL](https://www.elephantsql.com/), deployed with [Render](https://www.render.com/)
